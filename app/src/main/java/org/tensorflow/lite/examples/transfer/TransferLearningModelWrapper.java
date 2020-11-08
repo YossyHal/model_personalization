@@ -18,7 +18,6 @@ package org.tensorflow.lite.examples.transfer;
 import android.content.Context;
 import android.os.ConditionVariable;
 import java.io.Closeable;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import org.tensorflow.lite.examples.transfer.api.AssetModelLoader;
@@ -43,7 +42,7 @@ public class TransferLearningModelWrapper implements Closeable {
   TransferLearningModelWrapper(Context context) {
     model =
         new TransferLearningModel(
-            new AssetModelLoader(context, "model"), Arrays.asList("1", "2", "3", "4"));
+            new AssetModelLoader(context, "model"), Constants.CLASSES_LIST);
 
     new Thread(() -> {
       while (!Thread.interrupted()) {

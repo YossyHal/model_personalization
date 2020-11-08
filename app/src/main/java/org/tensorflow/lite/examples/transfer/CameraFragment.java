@@ -15,6 +15,8 @@ limitations under the License.
 
 package org.tensorflow.lite.examples.transfer;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -51,6 +53,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.snackbar.Snackbar;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
@@ -89,6 +92,8 @@ public class CameraFragment extends Fragment {
   private final ConcurrentLinkedQueue<String> addSampleRequests = new ConcurrentLinkedQueue<>();
 
   private final LoggingBenchmark inferenceBenchmark = new LoggingBenchmark("InferenceBench");
+
+  private static HashMap<Integer,String> buttonIdsHash = new HashMap<>();
 
   /**
    * Set up a responsive preview for the view finder.
@@ -189,17 +194,8 @@ public class CameraFragment extends Fragment {
 
   public final View.OnClickListener onAddSampleClickListener = view -> {
     String className;
-    if (view.getId() == R.id.class_btn_1) {
-      className = "1";
-    } else if (view.getId() == R.id.class_btn_2) {
-      className = "2";
-    } else if (view.getId() == R.id.class_btn_3) {
-      className = "3";
-    } else if (view.getId() == R.id.class_btn_4) {
-      className = "4";
-    } else {
-      throw new RuntimeException("Listener called for unexpected view");
-    }
+    className = buttonIdsHash.get(view.getId());
+    if (className == null) throw new RuntimeException("Listener called for unexpected view");
 
     addSampleRequests.add(className);
   };
@@ -284,8 +280,19 @@ public class CameraFragment extends Fragment {
     dataBinding.setVm(viewModel);
     View rootView = dataBinding.getRoot();
 
-    for (int buttonId : new int[] {
-        R.id.class_btn_1, R.id.class_btn_2, R.id.class_btn_3, R.id.class_btn_4}) {
+    String resViewName;
+    Resources res = getResources();
+    Context context = getContext();
+    int[] buttonIds = new int[Constants.NUM_CLASSES];
+    for (int i = 0; i < Constants.NUM_CLASSES; i++) {
+      resViewName = "class_btn_" + (i + 1);
+      int buttonId = res.getIdentifier(resViewName, "id", context.getPackageName());
+      buttonIdsHash.put(buttonId, String.valueOf(i + 1));
+      buttonIds[i] = buttonId;
+      Log.d("yossy", "viewId=" + buttonIds[i]);
+    }
+
+    for (int buttonId : buttonIds) {
       rootView.findViewById(buttonId).setOnClickListener(onAddSampleClickListener);
     }
 
