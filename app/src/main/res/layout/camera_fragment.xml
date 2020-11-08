@@ -137,6 +137,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+      <HorizontalScrollView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
       <LinearLayout
           style="@style/ClassButton"
           app:highlight='@{!vm.captureMode &amp;&amp; vm.firstChoice == "1"}'
@@ -276,6 +284,10 @@
             app:inferenceText='@{vm.confidence["5"]}'
             app:captureText='@{vm.numSamples["5"]}' />
       </LinearLayout>
+
+        </LinearLayout>
+
+      </HorizontalScrollView>
 
     </LinearLayout>
 
