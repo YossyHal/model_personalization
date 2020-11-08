@@ -42,7 +42,7 @@ public class TransferLearningModelWrapper implements Closeable {
   TransferLearningModelWrapper(Context context) {
     model =
         new TransferLearningModel(
-            new AssetModelLoader(context, "model"), Constants.CLASSES_LIST);
+            new AssetModelLoader(context, Constants.ASSETS_MODEL_NAME), Constants.CLASSES_LIST);
 
     new Thread(() -> {
       while (!Thread.interrupted()) {

@@ -249,6 +249,34 @@
             app:captureText='@{vm.numSamples["4"]}' />
       </LinearLayout>
 
+      <LinearLayout
+          style="@style/ClassButton"
+          app:highlight='@{!vm.captureMode &amp;&amp; vm.firstChoice == "5"}'
+          android:id="@+id/class_btn_5"
+          android:clickable="@{vm.captureMode}"
+          android:enabled="@{vm.captureMode}"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight=".25"
+          android:orientation="vertical">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_margin="8dp"
+            android:textSize="32sp"
+            android:text="5" />
+
+        <TextView
+            android:tag="subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            app:captureMode='@{vm.captureMode}'
+            app:inferenceText='@{vm.confidence["5"]}'
+            app:captureText='@{vm.numSamples["5"]}' />
+      </LinearLayout>
+
     </LinearLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
